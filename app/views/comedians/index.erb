@@ -1,0 +1,12 @@
+<h1>Comedians:</h1>
+
+<a href="/comedians/new">New Comedian</a>
+
+<% @comedians.each do |comedian| %>
+  <h3><a href="/items/<%= comedian.id %>"><%= comedian.name %></a></h3>
+  <ul>
+    <li><%= comedian.name %></li>
+    <li><%= comedian.age %></li>
+    <li><%= comedian.city %></li>
+  </ul>
+<% end %>
