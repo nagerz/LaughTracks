@@ -1,8 +1,17 @@
 class LaughTracksApp < Sinatra::Base
 
   get '/comedians' do
-    #@comedians = Comedian.find_by(params[:filter])
-    @comedians = Comedian.all
+    if params[:age]
+      @comedians = Comedian.where(age: params[:age])
+    elsif params[:sort]
+      if params[:sort] == "age"
+        @comedians = Comedian.order(:age)
+      elsif params[:sort] == "city"
+        @comedians = Comedian.order(:city)
+      end
+    else
+      @comedians = Comedian.all
+    end
     erb :"comedians/index"
   end
 
@@ -16,8 +25,7 @@ class LaughTracksApp < Sinatra::Base
   end
 
   post '/comedians' do
-    comedian = Comedian.new(params[:comedian])
-    comedian.save
+    Comedian.create(params[:comedian])
     redirect '/comedians'
   end
 

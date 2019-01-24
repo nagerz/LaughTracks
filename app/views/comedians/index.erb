@@ -5,8 +5,8 @@
 <% @comedians.each do |comedian| %>
   <h3><a href="/items/<%= comedian.id %>"><%= comedian.name %></a></h3>
   <ul>
-    <li><%= comedian.name %></li>
-    <li><%= comedian.age %></li>
-    <li><%= comedian.city %></li>
+    <li>Name: <%= comedian.name %></li>
+    <li>Age: <%= comedian.age %></li>
+    <li>City: <%= comedian.city %></li>
   </ul>
 <% end %>
