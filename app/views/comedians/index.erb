@@ -1,12 +1,23 @@
-<h1>Comedians:</h1>
-
-<a href="/comedians/new">New Comedian</a>
+<header id="greeting">
+  <h1>Laugh Tracks</h1>
+</header>
 
 <% @comedians.each do |comedian| %>
-  <h3><a href="/items/<%= comedian.id %>"><%= comedian.name %></a></h3>
-  <ul>
-    <li>Name: <%= comedian.name %></li>
-    <li>Age: <%= comedian.age %></li>
-    <li>City: <%= comedian.city %></li>
-  </ul>
+  <div id="comedian_<%= comedian.id %>">
+    <h3><a href="/items/<%= comedian.id %>"><%= comedian.name %></a></h3>
+    <ul>
+      <li>Name: <%= comedian.name %></li>
+      <li>Age: <%= comedian.age %></li>
+      <li>City: <%= comedian.city %></li>
+    </ul>
+    <div id="specials">
+      <h4>Specials:</h4>
+      <% comedian.specials.each do |special| %>
+        <%= special.name %>(<%= special.run_time %> min.)<br>
+        <img src=<%= special.image %> height="42" width="42"><br>
+      <% end %>
+    </div>
+  </div>
 <% end %>
+
+<a href="/comedians/new">New Comedian</a>
