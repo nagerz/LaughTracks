@@ -1,6 +1,12 @@
 <header id="greeting">
   <h1>Laugh Tracks</h1>
 </header>
+<section class="statistics-info">
+  <h5 class="statistics-header">Comedian Statistics:</h5>
+  <ul class="statistics-list">
+    <li>Average age: <%= @average_age %></li>
+  </ul>
+</section>
 
 <% @comedians.each do |comedian| %>
   <div id="comedian_<%= comedian.id %>">

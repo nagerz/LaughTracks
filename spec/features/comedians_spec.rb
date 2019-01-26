@@ -1,9 +1,9 @@
 RSpec.describe "comedians welcome page" do
   context "as a visitor" do
     before :each do
-      @comic_1 = Comedian.create(name: "Fred", dob: "1997-04-05", city: "NY")
-      @comic_2 = Comedian.create(name: "George", dob: "1976-01-09", city: "Boulder")
-      @comic_3 = Comedian.create(name: "Ron", dob: "1889-09-18", city: "Paris")
+      @comic_1 = Comedian.create(name: "Dave Chappelle", dob: "1973-08-24", city: "Washington, D.C.")
+      @comic_2 = Comedian.create(name: "Eddie Murphy", dob: "1961-04-03", city: "Brooklyn, NY")
+      @comic_3 = Comedian.create(name: "Robin Williams", dob: "1951-07-21", city: "Chicago, Illinois")
       @comedians = [@comic_1, @comic_2, @comic_3]
     end
 
@@ -12,7 +12,23 @@ RSpec.describe "comedians welcome page" do
 
       within '#greeting' do
 
-      expect(page).to have_content("Laugh Tracks")
+        expect(page).to have_content("Laugh Tracks")
+      end
+    end
+
+    it "has statistics title" do
+      visit '/comedians'
+
+      within '.statistics-info' do
+        expect(page).to have_content("Comedian Statistics:")
+      end
+    end
+
+    it "has statistics" do
+      visit '/comedians'
+
+      within '.statistics-info' do
+        expect(page).to have_content("Average age: #{56}")
       end
     end
 
@@ -41,11 +57,11 @@ RSpec.describe "comedians welcome page" do
     end
 
     it "filters and lists comedians by age" do
-      visit '/comedians?age=43'
+      visit '/comedians?age=45'
 
-      expect(page).to have_content("Name: #{@comic_2.name}")
-      expect(page).to have_content("Age: #{@comic_2.age}")
-      expect(page).to have_content("City: #{@comic_2.city}")
+      expect(page).to have_content("Name: #{@comic_1.name}")
+      expect(page).to have_content("Age: #{@comic_1.age}")
+      expect(page).to have_content("City: #{@comic_1.city}")
     end
 
     ##Test sorting

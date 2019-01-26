@@ -2,7 +2,7 @@ class LaughTracksApp < Sinatra::Base
 
   get '/comedians' do
     if params[:age]
-      @comedians = Comedian.all.select { |comedian| comedian.age == params[:age] }
+      @comedians = Comedian.all.select{ |comedian| comedian.age == params[:age] }
     elsif params[:sort]
       if params[:sort] == "age"
         @comedians = Comedian.all.sort_by { |comedian| comedian.age}
@@ -14,7 +14,10 @@ class LaughTracksApp < Sinatra::Base
     else
       @comedians = Comedian.all
     end
+
+    @average_age = get_average_age(@comedians)
     erb :"comedians/index"
+
   end
 
   get '/comedians/:id' do
@@ -29,6 +32,11 @@ class LaughTracksApp < Sinatra::Base
   post '/comedians' do
     Comedian.create(params[:comedian])
     redirect '/comedians'
+  end
+
+  private
+  def get_average_age(people)
+    people.sum { |person| person.age.to_i } / people.length.to_f
   end
 
 
