@@ -3,19 +3,22 @@
 </header>
 <section class="statistics-info">
   <h5 class="statistics-header">Comedian Statistics:</h5>
-  <ul class="statistics-list">
-    <li>Average age: <%= @average_age %></li>
-    <li>Average special run time: <%= @average_length %>min.</li>
-    <li>Comedian home towns:
-      <ul>
-      <% @unique_city_comics.each do |comic| %>
-        <li><a href="?city=<%= comic.city %>"><%= comic.city %></a></li>
-      <% end %>
+  <% if @comedians.empty? %>
+    <h6>No comedians available.</h6>
+  <% else %>
+    <ul class="statistics-list">
+
+      <li>Average age: <%= @average_age %></li>
+      <li>Average special run time: <%= @average_length %>min.</li>
+      <li>Comedian home towns:
+        <ul id="home-town-list">
+        <% @unique_city_comedians.each do |comedian| %>
+          <li><a href="?city=<%= comedian.city %>"><%= comedian.city %></a></li>
+        <% end %>
+      </ul>
+      </li>
     </ul>
-    </li>
-
-
-  </ul>
+  <% end %>
 </section>
 
 <% @comedians.each do |comedian| %>
@@ -36,4 +39,6 @@
   </div>
 <% end %>
 
-<a href="/comedians/new">New Comedian</a>
+<% if params.empty? %>
+  <a href="/comedians/new">New Comedian</a>
+<% end %>

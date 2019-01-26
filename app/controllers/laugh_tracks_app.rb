@@ -3,11 +3,14 @@ class LaughTracksApp < Sinatra::Base
   get '/comedians' do
     if params[:age]
       comedians_with_age = Comedian.all.select{ |comedian| comedian.age == params[:age] }
-      comedian_names = comedians_with_age.map do |comedian|
-        comedian.name
+      comedian_names = []
+      comedian_ids = []
+      comedians_with_age.each do |comedian|
+        comedian_names << comedian.name
+        comedian_ids << comedian.id
       end
       @comedians = Comedian.where(name: comedian_names)
-      @specials = Special.select("specials.*").joins(:comedian).where(name: comedian_names)
+      @specials = Special.where(comedian_id: comedian_ids)
     elsif params[:city]
       @comedians = Comedian.where(city: params[:city])
       @specials = Special.select("specials.*").joins(:comedian).where("comedians.city = ?", params[:city])
@@ -26,8 +29,8 @@ class LaughTracksApp < Sinatra::Base
     end
 
     @average_age = get_average_age(@comedians)
-    @average_length = @specials.average(:run_time).to_i
-    @unique_city_comics = @comedians.select(:city).distinct
+    @average_length = @specials.average(:run_time).round(1)
+    @unique_city_comedians = @comedians.select(:city).distinct
     erb :"comedians/index"
   end
 
@@ -47,7 +50,7 @@ class LaughTracksApp < Sinatra::Base
 
   private
   def get_average_age(people)
-    people.sum { |person| person.age.to_i } / people.length.to_f
+    (people.sum { |person| person.age.to_i } / people.length.to_f).round(1)
   end
 
   # def get_average_length(comedians)
