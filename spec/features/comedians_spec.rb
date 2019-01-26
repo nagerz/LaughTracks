@@ -32,6 +32,8 @@ RSpec.describe "comedians welcome page" do
           within '#specials' do
             comedian.specials.each do |special|
               expect(page).to have_content("#{special.name}")
+              expect(page).to have_content("#{special.run_time}")
+              expect(page).to have_css("img[src*='#{special.image}']")
             end
           end
         end
