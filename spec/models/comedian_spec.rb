@@ -2,7 +2,7 @@ RSpec.describe Comedian, type: :model do
   describe 'Validations' do
     describe 'Required Field(s)' do
       it 'should be invalid if missing a name' do
-        comic = Comedian.create(age: 48, city: "Paris")
+        comic = Comedian.create(dob: "1967-09-17", city: "Paris")
         expect(comic).to_not be_valid
       end
       it 'should be invalid if missing an age' do
@@ -10,7 +10,7 @@ RSpec.describe Comedian, type: :model do
         expect(comic).to_not be_valid
       end
       it 'should be invalid if missing a city' do
-        comic = Comedian.create(name: 'Mitch Hedberg', age: 53)
+        comic = Comedian.create(name: 'Mitch Hedberg', dob: "1967-09-17")
         expect(comic).to_not be_valid
       end
     end

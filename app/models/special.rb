@@ -4,4 +4,7 @@ class Special < ActiveRecord::Base
   validates :name, presence: true
   validates :run_time, presence: true
   validates :image, presence: true
+
+
+
 end
