@@ -9,6 +9,7 @@
     <ul class="statistics-list">
 
       <li>Average age: <%= @average_age %></li>
+      <li>Comedian specials: <%= @specials.count %></li>
       <li>Average special run time: <%= @average_length %>min.</li>
       <li>Comedian home towns:
         <ul id="home-town-list">
@@ -30,7 +31,7 @@
       <li>City: <%= comedian.city %></li>
     </ul>
     <div id="specials">
-      <h4>Specials:</h4>
+      <h4>Specials (<%= comedian.specials.count %>):</h4>
       <% comedian.specials.each do |special| %>
         <%= special.name %>(<%= special.run_time %> min.)<br>
         <img src=<%= special.image %> height="42" width="42"><br>
