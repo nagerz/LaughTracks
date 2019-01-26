@@ -5,6 +5,16 @@
   <h5 class="statistics-header">Comedian Statistics:</h5>
   <ul class="statistics-list">
     <li>Average age: <%= @average_age %></li>
+    <li>Average special run time: <%= @average_length %>min.</li>
+    <li>Comedian home towns:
+      <ul>
+      <% @unique_city_comics.each do |comic| %>
+        <li><a href="?city=<%= comic.city %>"><%= comic.city %></a></li>
+      <% end %>
+    </ul>
+    </li>
+
+
   </ul>
 </section>
 
