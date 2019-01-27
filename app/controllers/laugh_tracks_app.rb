@@ -34,13 +34,17 @@ class LaughTracksApp < Sinatra::Base
     erb :"comedians/index"
   end
 
-  get '/comedians/:id' do
-    @comedian = Comedian.find(params[:id])
-    erb :"comedians/show"
-  end
-
   get '/comedians/new' do
     erb :"comedians/new"
+  end
+
+  get '/comedians/:id' do
+    @comedian = Comedian.find(params[:id])
+    # if @comedian.nil?
+    #   Comedian not available.
+    # else
+    @specials = Special.where(comedian_id: params[:id])
+    erb :"comedians/show"
   end
 
   post '/comedians' do

@@ -157,7 +157,6 @@ RSpec.describe "comedians welcome page" do
       it "has statistics filtered by city (multiple comedians)" do
         city = "Denver, CO"
         visit "/comedians?city=#{city}"
-        save_and_open_page
 
         within '.statistics-info' do
           expect(page).to have_content("Average age: 46.5")
