@@ -172,7 +172,36 @@ RSpec.describe "comedians welcome page" do
       end
     end
 
-    ##Test sorting
+    context "with sort parameter" do
+      it "lists comedians sorted by age" do
+        param = "age"
+        visit "/comedians?sort=#{param}"
+
+        # @comic_1 = Comedian.create(name: "Dave Chappelle", dob: "1973-08-24", city: "Washington, D.C.")
+        # @comic_2 = Comedian.create(name: "Eddie Murphy", dob: "1961-04-03", city: "Brooklyn, NY")
+        # @comic_3 = Comedian.create(name: "Robin Williams", dob: "1951-07-21", city: "Chicago, Illinois")
+        # @comic_4 = Comedian.create(name: "Sarah", dob: "1951-08-21", city: "Denver, CO")
+        # @comic_5 = Comedian.create(name: "Kirsten", dob: "1992-03-14", city: "Denver, CO")
+
+        expect(page.body) =~ /"Sarah"*"Robin Williams"*"Eddie Murphy"*"Dave Chappelle"*"Kirsten"/
+
+      end
+
+      it "lists comedians sorted by city" do
+        param = "city"
+        visit "/comedians?sort=#{param}"
+
+        expect(page.body) =~ /"Eddie Murphy"*"Robin Williams"*"Sarah"*"Kirsten"*"Dave Chappelle"/
+      end
+
+      it "lists comedians sorted by name" do
+        param = "name"
+        visit "/comedians?sort=#{param}"
+
+        expect(page.body) =~ /"Dave Chappelle"*"Eddie Murphy"*"Kirsten"*Robin Williams"*"Sarah"/
+      end
+
+    end
 
   end
 end

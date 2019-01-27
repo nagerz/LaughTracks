@@ -1,5 +1,6 @@
 <header id="greeting">
   <h1>Laugh Tracks</h1>
+  <h6><a href="/comedians">Home</a></h6>
 </header>
 <!--
 <section class="statistics-info">
@@ -28,7 +29,7 @@
   <h6>Comedian not available.</h6>
 <% else %>
   <div id="comedian_<%= @comedian.id %>">
-    <h3><a href="/items/<%= @comedian.id %>"><%= @comedian.name %></a></h3>
+    <h3><%= @comedian.name %></h3>
     <ul>
       <li>Name: <%= @comedian.name %></li>
       <li>Age: <%= @comedian.age %></li>

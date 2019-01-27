@@ -15,6 +15,10 @@ class Comedian < ActiveRecord::Base
     (now.year - birth_date.year - ((now.month > birth_date.month || (now.month == birth_date.month && now.day >= birth_date.day)) ? 0 : 1)).to_s
   end
 
+  def self.unique_cities
+    distinct.pluck(:city)
+  end
+
   #Would like to discuss how to make somehting like this work
   # def self.average_age
   #   self.all.sum{ |comedian| comedian.age.to_i }.to_f / self.all.size
