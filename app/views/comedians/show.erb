@@ -1,46 +1,47 @@
-<header id="greeting">
-  <h1>Laugh Tracks</h1>
-  <h6><a href="/comedians">Home</a></h6>
+<header>
+  <h1>Laugh</h1>
+  <h2>Tracks</h2>
+
+  <nav>
+    <a href="/comedians" id="home-button">Home</a>
+    <% if params.empty? %>
+      <a href="/comedians/new" id="add-button">Add Comedian</a>
+    <% end %>
+  </nav>
 </header>
-<!--
-<section class="statistics-info">
-  <h5 class="statistics-header">Comedian Statistics:</h5>
-  <% if !@comedians %>
-    <h6>Comedian available.</h6>
-  <% else %>
-    <ul class="statistics-list">
 
-      <li>Average age: <%= @average_age %></li>
-      <li>Comedian specials: <%= @specials.count %></li>
-      <li>Average special run time: <%= @average_length %>min.</li>
-      <li>Comedian home towns:
-        <ul id="home-town-list">
-        <% @unique_city_comedians.each do |comedian| %>
-          <li><a href="?city=<%= comedian.city %>"><%= comedian.city %></a></li>
+<section class="hero">
+  <div class="container">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <% if @comedian.nil? %>
+          <h6>Comedian not available.</h6>
         <% end %>
-      </ul>
-      </li>
-    </ul>
-  <% end %>
-</section>
--->
-
-<% if @comedian.nil? %>
-  <h6>Comedian not available.</h6>
-<% else %>
-  <div id="comedian_<%= @comedian.id %>">
-    <h3><%= @comedian.name %></h3>
-    <ul>
-      <li>Name: <%= @comedian.name %></li>
-      <li>Age: <%= @comedian.age %></li>
-      <li>City: <%= @comedian.city %></li>
-    </ul>
-    <div id="specials">
-      <h4>Specials (<%= @comedian.specials.count %>):</h4>
-      <% @comedian.specials.each do |special| %>
-        <%= special.name %>(<%= special.run_time %> min.)<br>
-        <img src=<%= special.image %> height="42" width="42"><br>
-      <% end %>
+        <div class="carousel-item active">
+          <div id="comedian_<%= @comedian.id %>">
+            <img class="d-block" src=<%= @comedian.headshot %> alt="Comedian <%= @comedian.id %> slide">
+            <div class="carousel-caption-name">
+              <a href="/comedians/<%= @comedian.id %>" class="comedian-name"><%= @comedian.name %></a>
+              <ul class="comedian-carousel-info">
+                <li>Name: <%= @comedian.name %></li>
+                <li>Age: <%= @comedian.age %></li>
+                <li>Birth City: <%= @comedian.city %></li>
+              </ul>
+              <div class="specials-header">
+                <h4>Specials (<%= @comedian.specials.count %>):</h4>
+                <ul class="specials-list">
+                  <% @comedian.specials.each do |special| %>
+                    <article class="single-special">
+                      <h1 class="special-name"><%= special.name %>(<%= special.run_time %> min.)</h1><br>
+                      <img src=<%= special.image %>><br>
+                    </article>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-<% end %>
+</section>

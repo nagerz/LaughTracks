@@ -213,8 +213,6 @@ RSpec.describe "comedians welcome page" do
         "Kirsten".should appear_before("Robin Williams")
         "Robin Williams".should appear_before("Sarah")
       end
-
     end
-
   end
 end

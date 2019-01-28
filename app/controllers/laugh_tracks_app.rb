@@ -45,9 +45,6 @@ class LaughTracksApp < Sinatra::Base
 
   get '/comedians/:id' do
     @comedian = Comedian.find(params[:id])
-    # if @comedian.nil?
-    #   Comedian not available.
-    # else
     @specials = Special.where(comedian_id: params[:id])
     erb :"comedians/show"
   end
@@ -61,9 +58,5 @@ class LaughTracksApp < Sinatra::Base
   def get_average_age(people)
     (people.sum { |person| person.age.to_i } / people.length.to_f).round(1)
   end
-
-  # def get_average_length(comedians)
-  #   comedians.each do |come
-  #
 
 end
