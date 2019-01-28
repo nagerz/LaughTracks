@@ -14,4 +14,7 @@ group :development, :test do
   gem 'rspec'
   gem 'shotgun'
   gem 'tux'
+  gem 'simplecov'
+  gem 'bootstrap', '~> 4.0.0'
+  gem 'orderly'
 end
