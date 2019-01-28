@@ -1,0 +1,112 @@
+body {
+  font-family: 'Roboto+Mono', sans-serif;
+}
+
+header {
+  background: black;
+  color: white;
+  height: 50px;
+  padding: 0 25px;
+}
+
+header h1 {
+  float: left;
+  font-size: 50px;
+  color: red;
+  height: 50px;
+  width: 150px;
+  margin-top: 20px;
+}
+
+header h2 {
+  position: relative;
+  right: 120px;
+  float: left;
+  font-size: 50px;
+  display: inline-block;
+  color: red;
+  height: 50px;
+  width: 150px;
+  margin-top: 75px;
+}
+
+header nav {
+  float: right;
+}
+
+header nav a {
+  color: white;
+  display: inline-block;
+  padding: 17px 10px;
+}
+
+header nav a:hover {
+  color: blue;
+  cursor: pointer;
+}
+
+header nav #add-button {
+  font-size: 12px;
+  color: white;
+  display: inline-block;
+  padding: 12px 10px;
+}
+
+.hero {
+  background: url('images/microphone.jpg') no-repeat;
+  background-size: 100% 800px;
+  margin-bottom: 50px;
+}
+
+.statistics-info {
+  display: inline-block;
+  float: right;
+}
+
+.statistics-info h5 {
+  font-size: 30px;
+}
+
+.statistics-info h6 {
+  font-size: 50px;
+  float: center;
+}
+
+#comedian {
+  position: relative;
+  display: inline-block;
+}
+
+.comedian-info a {
+  position: absolute;
+  margin-top: 20px;
+  color: black;
+  right: 0%;
+  font-size: 60px;
+}
+
+#comedian img {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  display: inline-block;
+  border-radius: 50%;
+  border: 5px solid #3F8DA7;
+  margin-top: 70px;
+  left: 30px;
+}
+
+.basic-comedian-info {
+  color: yellow;
+  position: absolute;
+  right: 7%;
+  margin-top: 300px;
+}
+
+/* #hero h6 {
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  border: 5px solid #3F8DA7;
+  margin-bottom: 25px;
+} */
