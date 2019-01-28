@@ -22,7 +22,7 @@
         <li>Average special run time: <%= @average_length %>min.</li>
         <li>Comedian home towns:
           <ul id="home-town-list">
-          <% @comedians.unique_cities.each do |city| %>
+          <% @unique_city_comedians.each do |city| %>
             <li><a href="?city=<%= city %>">+<%= city %></a></li>
           <% end %>
         </ul>

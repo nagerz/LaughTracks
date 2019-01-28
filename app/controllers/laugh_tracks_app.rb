@@ -30,7 +30,7 @@ class LaughTracksApp < Sinatra::Base
 
     @average_age = get_average_age(@comedians)
     @average_length = @specials.average(:run_time).round(1)
-    #@unique_city_comedians = @comedians.select(:city).distinct
+    @unique_city_comedians = @comedians.unique_cities
     erb :"comedians/index"
   end
 
