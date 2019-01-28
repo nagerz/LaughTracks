@@ -19,9 +19,4 @@ class Comedian < ActiveRecord::Base
     distinct.pluck(:city)
   end
 
-  #Would like to discuss how to make somehting like this work
-  # def self.average_age
-  #   self.all.sum{ |comedian| comedian.age.to_i }.to_f / self.all.size
-  # end
-
 end

@@ -1,13 +1,11 @@
-#save_and_open_page
-
 RSpec.describe "comedians welcome page" do
   context "as a visitor" do
     before :each do
-      @comic_1 = Comedian.create(name: "Dave Chappelle", dob: "1973-08-24", city: "Washington, D.C.")
-      @comic_2 = Comedian.create(name: "Eddie Murphy", dob: "1961-04-03", city: "Brooklyn, NY")
-      @comic_3 = Comedian.create(name: "Robin Williams", dob: "1951-07-21", city: "Chicago, Illinois")
-      @comic_4 = Comedian.create(name: "Sarah", dob: "1951-08-21", city: "Denver, CO")
-      @comic_5 = Comedian.create(name: "Kirsten", dob: "1992-03-14", city: "Denver, CO")
+      @comic_1 = Comedian.create(name: "Dave Chappelle", dob: "1973-08-24", city: "Washington, D.C.", headshot: "img")
+      @comic_2 = Comedian.create(name: "Eddie Murphy", dob: "1961-04-03", city: "Brooklyn, NY", headshot: "img")
+      @comic_3 = Comedian.create(name: "Robin Williams", dob: "1951-07-21", city: "Chicago, Illinois", headshot: "img")
+      @comic_4 = Comedian.create(name: "Sarah", dob: "1951-08-21", city: "Denver, CO", headshot: "img")
+      @comic_5 = Comedian.create(name: "Kirsten", dob: "1992-03-14", city: "Denver, CO", headshot: "img")
       @comedians = [@comic_1, @comic_2, @comic_3, @comic_4, @comic_5]
       @comic_1.specials.create(name: "Dave Chappelle: Killin' Them Softly", run_time: 57, image: "https://m.media-amazon.com/images/M/MV5BMTcyOGMxN2MtYzUwYy00YzQxLTgwZTItZjAxZTIzYWM1YzEyXkEyXkFqcGdeQXVyNjExODE1MDc@._V1_.jpg")
       @comic_1.specials.create(name: "Dave Chappelle: For What It's Worth", run_time: 60, image: "https://m.media-amazon.com/images/M/MV5BZGQ2MjBjNDEtYWVlNi00Nzc3LTg2NjUtYWY3ZTkwNTAwNDQyXkEyXkFqcGdeQXVyMTk3NDAwMzI@._V1_.jpg")
@@ -21,9 +19,13 @@ RSpec.describe "comedians welcome page" do
       it "has title" do
         visit '/comedians'
 
-        within '#greeting' do
-
-          expect(page).to have_content("Laugh Tracks")
+        within 'header' do
+          within 'h1' do
+            expect(page).to have_content("Laugh")
+          end
+          within 'h2' do
+            expect(page).to have_content("Tracks")
+          end
         end
       end
 
@@ -31,7 +33,7 @@ RSpec.describe "comedians welcome page" do
         visit '/comedians'
 
         within '.statistics-info' do
-          expect(page).to have_content("Comedian Statistics:")
+          expect(page).to have_content("Set List:")
         end
       end
 
@@ -55,11 +57,15 @@ RSpec.describe "comedians welcome page" do
             expect(page).to have_content("Age: #{comedian.age}")
             expect(page).to have_content("City: #{comedian.city}")
 
-            within '#specials' do
-              comedian.specials.each do |special|
-                expect(page).to have_content("#{special.name}")
-                expect(page).to have_content("#{special.run_time}")
-                expect(page).to have_css("img[src*='#{special.image}']")
+            within '.specials-header' do
+              expect(page).to have_content("Specials (#{comedian.specials.count}):")
+
+              within '.specials-list' do
+                comedian.specials.each do |special|
+                  expect(page).to have_content("#{special.name}")
+                  expect(page).to have_content("#{special.run_time}")
+                  expect(page).to have_css("img[src*='#{special.image}']")
+                end
               end
             end
           end
@@ -177,28 +183,35 @@ RSpec.describe "comedians welcome page" do
         param = "age"
         visit "/comedians?sort=#{param}"
 
-        # @comic_1 = Comedian.create(name: "Dave Chappelle", dob: "1973-08-24", city: "Washington, D.C.")
-        # @comic_2 = Comedian.create(name: "Eddie Murphy", dob: "1961-04-03", city: "Brooklyn, NY")
-        # @comic_3 = Comedian.create(name: "Robin Williams", dob: "1951-07-21", city: "Chicago, Illinois")
-        # @comic_4 = Comedian.create(name: "Sarah", dob: "1951-08-21", city: "Denver, CO")
-        # @comic_5 = Comedian.create(name: "Kirsten", dob: "1992-03-14", city: "Denver, CO")
-
         expect(page.body) =~ /"Sarah"*"Robin Williams"*"Eddie Murphy"*"Dave Chappelle"*"Kirsten"/
-
+        "Kirsten".should appear_before("Dave Chappelle")
+        "Dave Chappelle".should appear_before("Eddie Murphy")
+        "Eddie Murphy".should appear_before("Robin Williams")
+        "Robin Williams".should appear_before("Sarah")
+        "Sarah".should_not appear_before("Robin Williams")
       end
 
       it "lists comedians sorted by city" do
         param = "city"
         visit "/comedians?sort=#{param}"
 
-        expect(page.body) =~ /"Eddie Murphy"*"Robin Williams"*"Sarah"*"Kirsten"*"Dave Chappelle"/
+        "Robin Williams".should_not appear_before("Eddie Murphy")
+        "Eddie Murphy".should appear_before("Robin Williams")
+        "Robin Williams".should appear_before("Sarah")
+        "Sarah".should appear_before("Kirsten")
+        "Kirsten".should appear_before("Dave Chappelle")
       end
 
       it "lists comedians sorted by name" do
         param = "name"
         visit "/comedians?sort=#{param}"
 
-        expect(page.body) =~ /"Dave Chappelle"*"Eddie Murphy"*"Kirsten"*Robin Williams"*"Sarah"/
+        "Eddie Murphy".should_not appear_before("Dave Chappelle")
+        "Sarah".should_not appear_before("Robin Williams")
+        "Dave Chappelle".should appear_before("Eddie Murphy")
+        "Eddie Murphy".should appear_before("Kirsten")
+        "Kirsten".should appear_before("Robin Williams")
+        "Robin Williams".should appear_before("Sarah")
       end
 
     end

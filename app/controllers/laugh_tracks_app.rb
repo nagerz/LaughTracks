@@ -11,26 +11,31 @@ class LaughTracksApp < Sinatra::Base
       end
       @comedians = Comedian.where(name: comedian_names)
       @specials = Special.where(comedian_id: comedian_ids)
+      @unique_cities = @comedians.unique_cities
     elsif params[:city]
       @comedians = Comedian.where(city: params[:city])
       @specials = Special.select("specials.*").joins(:comedian).where("comedians.city = ?", params[:city])
+      @unique_cities = @comedians.unique_cities
     elsif params[:sort]
       if params[:sort] == "age"
-        @comedians = (Comedian.all.sort_by { |comedian| comedian.age}).reverse
+        @comedians = Comedian.all.sort_by { |comedian| comedian.age}
+        @unique_cities = Comedian.unique_cities
       elsif params[:sort] == "city"
         @comedians = Comedian.order(:city)
+        @unique_cities = Comedian.unique_cities
       elsif params[:sort] == "name"
         @comedians = Comedian.order(:name)
+        @unique_cities = Comedian.unique_cities
       end
       @specials = Special.all
     else
       @comedians = Comedian.all
       @specials = Special.all
+      @unique_cities = @comedians.unique_cities
     end
 
     @average_age = get_average_age(@comedians)
     @average_length = @specials.average(:run_time).round(1)
-    @unique_city_comedians = @comedians.unique_cities
     erb :"comedians/index"
   end
 
